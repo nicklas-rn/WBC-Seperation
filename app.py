@@ -44,7 +44,7 @@ def initialize_ports():
         arduino_ports = [
             p.device
             for p in serial.tools.list_ports.comports()
-            if 'USB2.0-Serial' in p.description  # may need tweaking to match new arduinos
+            if 'USB2.0-Serial' in p.description or p.name =='COM7'
         ]
         print(arduino_ports)
         if not arduino_ports:
