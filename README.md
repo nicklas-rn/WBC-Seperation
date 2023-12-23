@@ -12,11 +12,11 @@ Now, perform the same for Python. In a terminal window, enter the following comm
 ```
 python --version
 ```
-If Python is installed, this command will display the installed version. Otherwise, go to https://www.python.org/downloads/ and download Python for your operating system.
-### 1.3 Install Flask
-Flask is the web framework that this software is based on. To install it, enter the following command:
+If Python is installed, this command will display the installed version. Otherwise, go to https://www.python.org/downloads/ and download Python for your operating system. Please make sure to install Python 3.10.x and **not** 3.12.x
+### 1.3 Install Packages
+This software uses a few Python packages. To install them, enter the following command:
 ```
-pip install flask
+pip install -r requirements.txt
 ```
 ### 1.4 Install OpenCV
 For image detection, this software uses the package opencv. You can install it with the following command:
