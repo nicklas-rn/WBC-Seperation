@@ -18,11 +18,7 @@ This software uses a few Python packages. To install them, enter the following c
 ```
 pip install -r requirements.txt
 ```
-### 1.4 Install OpenCV
-For image detection, this software uses the package opencv. You can install it with the following command:
-```
-pip install opencv
-```
+
 ## 2. Installation of this software
 To install this software, you have to clone this repository to your system. First, open a terminal window and go to the folder where you want it installed:
 ```
