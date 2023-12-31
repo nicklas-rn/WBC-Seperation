@@ -28,51 +28,44 @@ positions = {
     'red': 0,
 }
 
-global stepper
-global laser
 
-def initialize_ports():
+@app.route('/select_port', methods=['POST'])
+def select_port():
+    global device
+
+    port = request.args.get('port')
+
+    print(port)
+
+    device_port = [p.device for p in serial.tools.list_ports.comports() if p.name == port][0]
+
+    device = serial.Serial(device_port, 115200, timeout=0.5)
+
+    return jsonify({'success': 'ok'})
+
+@app.route('/')
+def index():
+
     ports = serial.tools.list_ports.comports()
 
     print([port.name for port in ports])
 
-    global stepper
-    global laser
+    ports_serialized = [{'name': port.name, 'description': port.description} for port in ports]
+    print(ports_serialized)
 
     try:
-        #stepper = serial.Serial(port='/dev/usbmodem1101', baudrate=115200, timeout=.1)
-        arduino_ports = [
-            p.device
-            for p in serial.tools.list_ports.comports()
-            if 'USB2.0-Serial' in p.description or p.name =='COM7'
-        ]
-        print(arduino_ports)
-        if not arduino_ports:
-            raise IOError("No Arduino found")
-        if len(arduino_ports) > 1:
-            print('Multiple Arduinos found - using the first')
-
-        stepper = serial.Serial(arduino_ports[0])
+        selected_port = device.port.replace('/dev/', '')
     except:
-        stepper = serial.Serial()
-        print("connecting to stepper failed")
-    
-    try:
-        laser = serial.Serial(port='/dev/ttyUSB2', baudrate=115200, timeout=.1)
-    except:
-        laser = serial.Serial()
-        print("connecting to laser failed")
+        selected_port = ''
 
+    print(selected_port)
 
+    context = {
+        'ports': ports_serialized,
+        'selected_port': selected_port,
+    }
 
-    time.sleep(1)
-
-initialize_ports()
-
-
-@app.route('/')
-def index():
-    return render_template('index.html')
+    return render_template('index.html', context=context)
 
 
 @app.route('/video_feed')
@@ -84,7 +77,7 @@ def video_feed():
 def change_value_stepper():
     value = request.args.get('value')
     print(f"set stepper to {value}")
-    stepper.write(bytes(f"stepper,{value}, ", 'utf-8'))
+    device.write(bytes(f"stepper,{value}, ", 'utf-8'))
 
     return jsonify({'success': 'ok'})
 
@@ -93,7 +86,7 @@ def change_value_stepper():
 def change_value_laser():
     value = request.args.get('value')
     print(f"set laser to {value}")
-    stepper.write(bytes(f"laser,{value}, ", 'utf-8'))
+    device.write(bytes(f"laser,{value}, ", 'utf-8'))
 
     return jsonify({'success': 'ok'})
 
@@ -103,7 +96,7 @@ def move_stepper_position():
     position = request.args.get('position')
     value = positions[position] * MM_CONVERSION * STEPPER_STEPS / STEPPER_HEIGHT
     print(f"set stepper to {position} at {value}")
-    stepper.write(bytes(f"stepper,{value}, ", 'utf-8'))
+    device.write(bytes(f"stepper,{value}, ", 'utf-8'))
 
     return jsonify({'success': 'ok', 'value': value})
 
