@@ -12,7 +12,7 @@ Now, perform the same for Python. In a terminal window, enter the following comm
 ```
 python --version
 ```
-If Python is installed, this command will display the installed version. Otherwise, go to https://www.python.org/downloads/ and download Python for your operating system. Please make sure to install Python 3.10.x and **not** 3.12.x
+If Python is installed, this command will display the installed version. Otherwise, go to https://www.python.org/downloads/ and download Python for your operating system. Please make sure to install **version 3.10** or lower.
 ### 1.3 Install Packages
 This software uses a few Python packages. To install them, enter the following command:
 ```
@@ -24,21 +24,21 @@ To install this software, you have to clone this repository to your system. Firs
 ```
 cd path\to\folder
 ```
-Replace 'path\to\folder' with the respective path to the desired folder.
+Replace 'path\to\folder' with the respective path to the desired folder. **Write the path to the folder down** somewhere. You will need it whenever you want to start the software.
 Then, clone this repository to your system with the following command in the same terminal window:
 ```
 git clone https://github.com/nicklas-rn/WBC-seperation
 ```
-Now, when you go to the previously specified path in your explorer/finder, you should find a folder with the name liquid-handler. The installation was successful!
+Now, when you go to the previously specified path in your explorer/finder, you should find a folder with the name WBS-Seperation. The installation was successful!
 
 # Running the software
-First, go to the folder 'WBC-seperation' in a terminal window. To achieve that, open a terminal window and enter the following command:
+First, go to the folder 'WBC-Seperation' in a terminal window. To achieve that, open a terminal window and enter the following command:
 ```
-cd path\to\folder\WBC-seperation
+cd path\to\folder\WBC-Seperation
 ```
 To run the software, enter:
 ```
-flask run
+python app.py
 ```
 Then, open your browser and open the following domain: http://127.0.0.1:5000
 You're good to go!
